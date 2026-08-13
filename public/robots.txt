@@ -1,0 +1,14 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Shared images at /s/ are meant to be found. Everything below belongs to one
+# account, or is machinery.
+Disallow: /account
+Disallow: /admin
+Disallow: /api/
+Disallow: /auth
+Disallow: /credits
+Disallow: /history
+Disallow: /images/
+Disallow: /setup

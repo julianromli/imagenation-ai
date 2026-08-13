@@ -1,0 +1,310 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-heading: var(--font-sans);
+    --font-sans: 'Geist Variable', sans-serif;
+    --ease-out-quint: var(--curve-out-quint);
+    --ease-out-strong: var(--curve-out-strong);
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+    /* Motion curves. Kept outside @theme so hand-written CSS below can read
+       them too — @theme inline does not emit its own custom properties. */
+    --curve-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+    --curve-out-strong: cubic-bezier(0.2, 0, 0, 1);
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --radius: 0.625rem;
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --sidebar: oklch(0.205 0 0);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.488 0.243 264.376);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.269 0 0);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    }
+  body {
+    @apply bg-background text-foreground;
+    }
+  button:not(:disabled), [role="button"]:not(:disabled) {
+    cursor: pointer;
+    }
+  html {
+    @apply font-sans;
+    }
+}
+
+/* Squircle corners.
+ *
+ * `corner-shape` smooths the corner curve into the straight edge instead of
+ * meeting it at a quarter circle. It is a paint-level property, so borders,
+ * ring shadows, and focus outlines follow the new shape rather than being
+ * clipped by it. That is what makes a blanket rule safe here, and it is the
+ * difference from a clip-path approach, which would crop all three.
+ *
+ * Applied to everything rather than to a list of radius utilities. A corner
+ * with no radius has no corner area, so the declaration draws nothing there.
+ * Matching on utility names got this wrong wherever a radius reaches a child
+ * through a variant — `*:[img:first-child]:rounded-t-*` on a card puts the
+ * class on the parent and the radius on the child, so the frame and the image
+ * ended up with different corners.
+ *
+ * Pills are the one exception. Their corners are already a half circle, and
+ * smoothing turns the stadium into a superellipse. The reset outranks the
+ * blanket on specificity, so source order does not matter. It matches
+ * `after:rounded-full` too, which is how the avatar ring and the drawer swipe
+ * handle are drawn.
+ *
+ * Chromium only for now. Every other browser ignores both declarations and
+ * keeps today's circular corners, so there is nothing to fall back to.
+ */
+*,
+*::before,
+*::after {
+  corner-shape: squircle;
+}
+
+[class*="rounded-full"],
+[class*="rounded-full"]::before,
+[class*="rounded-full"]::after {
+  corner-shape: round;
+}
+
+@layer components {
+  /* First-run entrance. `backwards` fill holds the from-state during the
+     delay, so the resting state stays authoritative if the animation
+     never runs. Stagger by setting --n on each child. */
+  @keyframes rise-in {
+    from {
+      opacity: 0;
+      translate: 0 8px;
+      filter: blur(2px);
+    }
+  }
+
+  .rise-in {
+    animation: rise-in 350ms var(--curve-out-quint) backwards;
+    animation-delay: calc(var(--n, 0) * 90ms);
+  }
+
+  .rise-in-children > * {
+    animation: rise-in 350ms var(--curve-out-quint) backwards;
+  }
+  .rise-in-children > *:nth-child(2) { animation-delay: 90ms; }
+  .rise-in-children > *:nth-child(3) { animation-delay: 180ms; }
+  .rise-in-children > *:nth-child(4) { animation-delay: 270ms; }
+  .rise-in-children > *:nth-child(n + 5) { animation-delay: 360ms; }
+
+  /* Same entrance as .rise-in without the blur. For large surfaces (images,
+     full panels) where animating a filter would repaint too much area. */
+  @keyframes rise-in-plain {
+    from {
+      opacity: 0;
+      translate: 0 8px;
+    }
+  }
+
+  .rise-in-plain {
+    animation: rise-in-plain 350ms var(--curve-out-quint) backwards;
+  }
+
+  /* A derived value settling on its new number. */
+  @keyframes bump-in {
+    from {
+      opacity: 0;
+      translate: 0 4px;
+    }
+  }
+
+  .bump-in {
+    animation: bump-in 140ms var(--curve-out-quint) backwards;
+  }
+
+  /* One-shot acknowledgement that a counter changed. */
+  @keyframes badge-pop {
+    0% { scale: 1; }
+    35% { scale: 1.25; }
+    100% { scale: 1; }
+  }
+
+  .badge-pop {
+    animation: badge-pop 320ms var(--curve-out-quint);
+  }
+
+  /* Expanding disclosure. The child is clipped, so the row height carries the
+     reveal. Mark up as:
+       <div class="disclosure" data-open={bool} inert={!bool}>
+         <div>…content…</div>
+       </div>
+     The content stays mounted in both states — a transition needs two states
+     to interpolate between. `inert` keeps the closed content out of the tab
+     order and the accessibility tree.
+
+     This animates grid-template-rows, which is a layout property. That is a
+     deliberate exception to the transform/opacity rule: it runs for 200ms, on
+     user action, on one element at a time. Do not reach for it inside a list
+     that expands many rows at once. */
+  .disclosure {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition:
+      grid-template-rows 200ms var(--curve-out-strong),
+      opacity 150ms var(--curve-out-quint);
+  }
+
+  .disclosure > * {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .disclosure[data-open="true"] {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  /* A fade with no movement. Used by the reduced-motion block below. */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+}
+
+/* Reduced motion. Deliberately unlayered: unlayered declarations outrank
+   every layered one, so this wins over Tailwind's utilities without
+   !important. 1ms rather than `none` so listeners that wait on
+   transitionend/animationend — Base UI's popups do — still fire. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-delay: 0s;
+    animation-duration: 1ms;
+    animation-iteration-count: 1;
+    transition-delay: 0s;
+    transition-duration: 1ms;
+  }
+}
+
+/* The blanket clamp above is correct as a default, but a few motions exist
+   specifically to prevent a jarring change. For those, drop the movement and
+   keep a short fade rather than removing the bridge entirely. Class selectors
+   outrank the `*` above, so these win regardless of source order. */
+@media (prefers-reduced-motion: reduce) {
+  .rise-in,
+  .rise-in-plain,
+  .bump-in {
+    animation-duration: 120ms;
+    animation-name: fade-in;
+  }
+
+  .disclosure {
+    transition-duration: 120ms;
+    transition-property: opacity;
+  }
+}

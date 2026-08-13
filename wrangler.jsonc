@@ -1,0 +1,99 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "imagenation-ai",
+  "main": "src/server.ts",
+  "compatibility_date": "2026-08-05",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true
+  },
+  // Bindings carry no IDs on purpose. Wrangler creates them locally on
+  // `wrangler dev` and provisions them on the account at deploy time, so this
+  // template stays free of account-specific values.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      // Drizzle Kit writes its SQL here, so Wrangler reads migrations from the
+      // same place instead of the default ./migrations.
+      "migrations_dir": "drizzle","database_id": "7ac8c94c-f509-4528-97ff-026c1846024f","database_name": "imagenation-ai"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "BUCKET","bucket_name": "imagenation-ai","preview_bucket_name": "imagenation-ai"
+    }
+  ],
+  // The period must be either 10 or 60 seconds. Each distinct limit needs its
+  // own binding, and each namespace_id must be unique within the account:
+  // bindings that share one share their counters, across Workers. The 1000
+  // range belongs to the ecommerce template this was forked from — deploying
+  // both on one account with the same numbers would make them share counters.
+  // Deploying a second Imagenation? Renumber these first.
+  "ratelimits": [
+    {
+      "name": "GENERATE_LIMITER",
+      "namespace_id": "2001",
+      "simple": {
+        "limit": 12,
+        "period": 60
+      }
+    },
+    // Sign-up is what mints the free credit grant, so it is the cheapest thing
+    // an abuser can repeat. This is the only brake, because there is no email
+    // verification. See ADR-0016.
+    {
+      "name": "AUTH_LIMITER",
+      "namespace_id": "2002",
+      "simple": {
+        "limit": 10,
+        "period": 60
+      }
+    },
+    {
+      "name": "CHECKOUT_LIMITER",
+      "namespace_id": "2003",
+      "simple": {
+        "limit": 10,
+        "period": 60
+      }
+    },
+    // The checkout asks for a payment's status every few seconds while the
+    // buyer is on the screen. This is only an abuse net: what actually keeps
+    // Mayar's request budget safe is the read-back claim in purchase.ts, so the
+    // limit is set high enough that several tabs are not refused.
+    {
+      "name": "POLL_LIMITER",
+      "namespace_id": "2006",
+      "simple": {
+        "limit": 60,
+        "period": 60
+      }
+    },
+    {
+      "name": "WEBHOOK_LIMITER",
+      "namespace_id": "2004",
+      "simple": {
+        "limit": 60,
+        "period": 60
+      }
+    },
+    // Setup runs once for the whole app, so this is keyed on a constant
+    // rather than on the caller. A wrong token should cost the guesser time.
+    {
+      "name": "SETUP_LIMITER",
+      "namespace_id": "2005",
+      "simple": {
+        "limit": 10,
+        "period": 60
+      }
+    }
+  ],
+  "triggers": {
+    "crons": ["*/5 * * * *"]
+  },
+  // Live payments. Set this to "sandbox" here, or in .dev.vars for local work
+  // only, to go back to test money. See "Environment variables" in README.md.
+  "vars": {
+    "MAYAR_ENVIRONMENT": "production"
+  }
+}
